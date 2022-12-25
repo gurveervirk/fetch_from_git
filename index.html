@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+      crossorigin="anonymous"
+    />
+    <script>
+      let i="<table><thead><tr>";
+      let j="Employees whose salary is greater than 500000: ";
+      let k="Employees who joined in December: ";
+      fetch(
+        "https://rawcdn.githack.com/kmitprojectschool/sem12022/788c820e40a750fecb30433c8d346457b7859abc/employee.json"
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          Tabhead(data.Employees[0]);
+          i+="</tr></thead><tbody>";
+          Tab(data.Employees);
+          i+="</tbody></table>";
+          data.Employees.forEach(Sal);
+          data.Employees.forEach(join);
+          document.getElementById("tab1").innerHTML=i;
+          document.getElementById("sal").innerHTML=j;
+          console.log(j);
+          document.getElementById("dec").innerHTML=k;
+          console.log(k);
+        })
+      async function Tabhead(y) {
+        for (let x of Object.keys(y))
+          i+="<th>"+x+"</th>";
+      }
+      async function Tab(z) {
+        for(let y in z){
+          i+="<tr>";
+          for (let x of Object.keys(z[0])) i+="<td>"+z[y][x]+"</td>";
+          i+="</tr>";
+        }
+      }
+      function Sal(x) {
+        if (x["Salary"] > 500000) j+=x["Name"];
+      }
+      function join(x) {
+        z=x["DateOfJoining"].split("-");
+        if (z[1]==12) k+=x["Name"]+" ";
+      }
+    </script>
+    <style>
+      .container {
+        text-align: center;
+        padding: 10px;
+      }
+      table {
+        border: 7px solid rgb(5, 0, 0);
+        margin-left: auto;
+        margin-right: auto;
+      }
+      th{
+        border: 4px solid rgb(39, 150, 41);
+        border-collapse: separate;
+        padding: 10px;
+        font-size: 30px;
+        font-weight: bold;
+        color: rgb(6, 69, 125);
+        font-family: 'Trebuchet MS';
+        font-style: italic;
+      }
+      td{
+        border: 4px solid rgb(12, 217, 16);
+        border-collapse: separate;
+        padding: 10px;
+        font-size: 23px;
+        font-weight: bold;
+        color: rgb(18, 117, 204);
+        font-family: 'Trebuchet MS';
+      }
+    </style>
+  </head>
+  <body style="background-color: bisque;">
+    <h1 class="display-5" style="text-align: center; font-weight: bold;">DATA:</h1>
+    <div class="container" id="tab1"></div>
+    <hr>
+    <div class="container" id="sal" style="font-weight: bold; font-size: large;"></div>
+    <hr>
+    <div class="container" id="dec" style="font-weight: bold; font-size: large;"></div>
+  </body>
+</html>
